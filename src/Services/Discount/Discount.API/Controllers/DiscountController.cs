@@ -24,7 +24,7 @@ namespace Discount.API.Controllers
 			return Ok(discount);
 		}
 
-		[HttpPost("{productName}", Name = "GetDiscount")]
+		[HttpPost]
 		[ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
 		public async Task<ActionResult<Coupon>> CreateDiscount(Coupon coupon)
 		{
