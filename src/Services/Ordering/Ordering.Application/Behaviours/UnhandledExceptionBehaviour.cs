@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace Ordering.Application.Behaviours
+{
+	public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<IRequest<TResponse>, TResponse>
+	{
+		private readonly ILogger<TRequest> _logger;
+
+		public UnhandledExceptionBehaviour(ILogger<TRequest> logger)
+		{
+			_logger = logger;
+		}
+
+		public async Task<TResponse> Handle(IRequest<TResponse> request,
+			RequestHandlerDelegate<TResponse> next,
+			CancellationToken cancellationToken)
+		{
+			try
+			{
+				return await next();
+			}
+			catch (Exception ex)
+			{
+				var requestName = typeof(TRequest).Name;
+				_logger.LogError(ex, "Application Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
+				throw;
+			}
+		}
+	}
+}
