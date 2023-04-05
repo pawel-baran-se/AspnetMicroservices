@@ -10,9 +10,9 @@ namespace Ordering.Infrastructure.Repositories
 	{
 		protected readonly OrderContext _dbContext;
 
-		public RepositoryBase(OrderContext _dbContext)
+		public RepositoryBase(OrderContext dbContext)
 		{
-			_dbContext = _dbContext;
+			_dbContext = dbContext;
 		}
 
 
