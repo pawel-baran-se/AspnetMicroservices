@@ -10,6 +10,11 @@ builder.Host.ConfigureLogging((hostingContext, loggingBuilder) =>
 	loggingBuilder.AddDebug();
 });
 
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+	config.AddJsonFile($"ocelot.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true);
+});
+
 builder.Services.AddOcelot();
 
 
